@@ -29,115 +29,6 @@ class _SignInScreenState extends State<SignInScreen> {
       appBar: AppBar(title: Text("Sign In")),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            TextField(
-              controller: _emailController,
-              decoration: InputDecoration(labelText: 'Email'),
-            ),
-            TextField(
-              controller: _passwordController,
-              decoration: InputDecoration(labelText: 'Password'),
-              obscureText: true,
-            ),
-            SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: () {
-                // signInWithEmail
-                Navigator.pushReplacement(
-                    // ignore: use_build_context_synchronously
-                    context,
-                    MaterialPageRoute(builder: (context) => HomePage()),
-                  );
-              },
-              child: Text("Sign in with Email"),
-            ),
-            SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: () async {
-                // User? user = await signInWithGoogle();
-                // if (user != null) {
-                //   Navigator.pushReplacement(
-                //     // ignore: use_build_context_synchronously
-                //     context,
-                //     MaterialPageRoute(builder: (context) => HomePage()),
-                //   );
-                // } else {
-                //   _showErrorDialog("Google Sign-In failed");
-                // }
-              },
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  FaIcon(
-                    FontAwesomeIcons.google,
-                    color: Colors.blue,
-                  ),
-                  SizedBox(width: 10),
-                  Text('Sign In with Google', style: TextStyle(color: Colors.blue),)
-                ],
-              ),
-            ),
-            SizedBox(height: 20),
-            ElevatedButton.icon(
-              icon: Icon(Icons.apple, color: Colors.black,),
-              label: Text(
-                "Sign in with Apple", 
-                style: TextStyle(color: Colors.black),
-                ),
-              onPressed: () async {
-                // User? user = await signInWithApple();
-                // if (user != null) {
-                //   Navigator.pushReplacement(
-                //     // ignore: use_build_context_synchronously
-                //     context,
-                //     MaterialPageRoute(builder: (context) => HomePage()),
-                //   );
-                // } else {
-                //   _showErrorDialog("Apple Sign-In failed");
-                // }
-              },
-            ),
-            SizedBox(height: 16),
-            // Sign-Up Button
-            Center(
-              child: RichText(text:
-                TextSpan(
-                  text: "Don't have an account? ",
-                  style: TextStyle(color: Colors.black),
-                  children: [
-                    TextSpan(
-                      text: "Sign-up",
-                      style: TextStyle(
-                        color: Colors.blue,
-                        fontWeight: FontWeight.normal,
-                        decoration: TextDecoration.underline,
-                      ),
-                      recognizer: TapGestureRecognizer()
-                      ..onTap = () {
-                        Navigator.push(
-                          context, 
-                          MaterialPageRoute(builder: (context) => SignUpScreen()),
-                          );
-                      }
-                    )
-                  ]
-                )
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: Text("Sign In")),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
         child: BlocConsumer<AuthBloc, AuthState>(
           listener: (context, state) {
             if (state is AuthSuccess) {
@@ -164,21 +55,6 @@ class _SignInScreenState extends State<SignInScreen> {
                   controller: _passwordController,
                   decoration: InputDecoration(labelText: 'Password'),
                   obscureText: true,
-                ),
-                SizedBox(height: 20),
-                ElevatedButton.icon(
-                  icon: Icon(Icons.login),
-                  label: Text("Sign in with Google"),
-                  onPressed: () {
-                    context.read<AuthBloc>().add(SignInWithGoogleEvent());
-                  },
-                ),
-                ElevatedButton.icon(
-                  icon: Icon(Icons.apple),
-                  label: Text("Sign in with Apple"),
-                  onPressed: () {
-                    context.read<AuthBloc>().add(SignInWithAppleEvent());
-                  },
                 ),
                 SizedBox(height: 20),
             ElevatedButton(

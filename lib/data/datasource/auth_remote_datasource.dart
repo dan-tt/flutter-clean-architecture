@@ -53,7 +53,8 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
   }
 
   // Sign in with Apple
-  Future<User?> signInWithApple() async {
+  @override
+  Future<UserModel?> signInWithApple() async {
     final credential = await SignInWithApple.getAppleIDCredential(
       scopes: [
         AppleIDAuthorizationScopes.email,
@@ -65,6 +66,10 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
       accessToken: credential.authorizationCode,
     );
     UserCredential userCredential = await FirebaseAuth.instance.signInWithCredential(oauthCredential);
-    return userCredential.user;
+    var user = userCredential.user;
+    if (user != null) {
+      return UserModel(id: user.uid, email: user.email ?? '');
+    }
+    return null;
   }
 }
