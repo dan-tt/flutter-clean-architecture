@@ -22,4 +22,9 @@ class AuthRepositoryImpl implements AuthRepository {
   Future<User?> signInWithApple() {
     return remoteDataSource.signInWithApple();
   }
+  
+  @override
+  Future<void> signUp(String name, String email, String password) {
+    return remoteDataSource.signUp(name, email, password);
+  }
 }

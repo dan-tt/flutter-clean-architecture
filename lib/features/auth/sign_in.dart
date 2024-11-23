@@ -9,7 +9,6 @@ import '../home/home.dart'; // Import your Home page
 import 'bloc/auth_bloc.dart';
 import 'bloc/auth_event.dart';
 import 'bloc/auth_state.dart';
-import 'sign_up.dart';  // Create or import the SignUpScreen
 
 class SignInScreen extends StatefulWidget {
   const SignInScreen({super.key});
@@ -110,10 +109,7 @@ class _SignInScreenState extends State<SignInScreen> {
                       ),
                       recognizer: TapGestureRecognizer()
                       ..onTap = () {
-                        Navigator.push(
-                          context, 
-                          MaterialPageRoute(builder: (context) => SignUpScreen()),
-                          );
+                        Navigator.pushNamed(context, '/sign-up');
                       }
                     )
                   ]

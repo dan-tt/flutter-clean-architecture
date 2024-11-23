@@ -3,8 +3,10 @@ import 'package:flutter_application_1/features/auth/bloc/auth_bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'application/service_locator.dart';
 import 'features/auth/sign_in.dart';
+import 'features/auth/sign_up.dart';
 
 void main() {
+  setupServiceLocator();
   runApp(const MyApp());
 }
 
@@ -39,6 +41,9 @@ class MyApp extends StatelessWidget {
         create: (context) => sl<AuthBloc>(),
         child: SignInScreen(),
         ),
+      routes: {
+      '/sign-up': (context) => const SignUpScreen(),
+    },
     );
   }
 }

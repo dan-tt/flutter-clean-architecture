@@ -3,13 +3,21 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 
+import '../network/APIs/sign_up_api.dart';
+import '../network/network_service.dart';
+
 abstract class AuthRemoteDataSource {
+  Future<void> signUp(String name, String email, String password);
   Future<UserModel?> signInWithEmail(String email, String password);
   Future<UserModel?> signInWithGoogle();
   Future<UserModel?> signInWithApple();
 }
 
 class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
+  final NetworkService networkService;
+
+  AuthRemoteDataSourceImpl({required this.networkService});
+
   // FirebaseAuth instance
   // Sign in with Email and Password
   @override
@@ -71,5 +79,14 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
       return UserModel(id: user.uid, email: user.email ?? '');
     }
     return null;
+  }
+  // Sign up with email
+  Future<void> signUp(String name, String email, String password) async {
+    final request = SignUpAPI(name: name, email: email, password: password);
+    final response = await networkService.execute(request);
+
+    if (!response['success']) {
+      throw Exception(response['message'] ?? 'Sign-Up Failed');
+    }
   }
 }

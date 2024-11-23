@@ -9,6 +9,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   AuthBloc({
     required this.auth,
   }) : super(AuthInitial()) {
+    on<SignUpWithEmailEvent>(_onSignUpWithEmail);
     on<SignInWithEmailEvent>(_onSignInWithEmail);
     on<SignInWithGoogleEvent>(_onSignInWithGoogle);
     on<SignInWithAppleEvent>(_onSignInWithApple);
@@ -44,6 +45,16 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       emit(AuthSuccess());
     } else {
       emit(AuthFailure("Apple Sign-In failed"));
+    }
+  }
+
+  Future<void> _onSignUpWithEmail(SignUpWithEmailEvent event, Emitter<AuthState> emit) async {
+    emit(AuthLoading());
+    final result = await auth.signUp(event.name, event.email, event.password);
+    if (result != null) {
+      emit(AuthSuccess());
+    } else {
+      emit(AuthFailure("Sign-Up failed"));
     }
   }
 }

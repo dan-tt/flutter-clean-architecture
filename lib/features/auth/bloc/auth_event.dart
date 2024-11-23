@@ -18,3 +18,14 @@ class SignInWithEmailEvent extends AuthEvent {
 class SignInWithGoogleEvent extends AuthEvent {}
 
 class SignInWithAppleEvent extends AuthEvent {}
+
+class SignUpWithEmailEvent extends AuthEvent {
+  final String name;
+  final String email;
+  final String password;
+
+  SignUpWithEmailEvent({required this.name, required this.email, required this.password});
+
+  @override
+  List<Object?> get props => [email, password];
+}
